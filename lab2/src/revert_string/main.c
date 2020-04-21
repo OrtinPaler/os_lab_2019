@@ -6,9 +6,17 @@
 
 int main(int argc, char *argv[])
 {
-	if (argc != 2)
-	{
-		printf("Usage: %s string_to_revert\n", argv[0]);
+	if (argc != 2){
+        printf("\nUsage: %s string_to_revert\n", argv[0]);
+
+        char *reverted_str = malloc(sizeof(char) * (strlen(argv[0]) + 1));
+        strcpy(reverted_str, argv[0]);
+
+        RevertString(reverted_str);
+
+        printf("Reverted: %s\n\n", reverted_str);
+        free(reverted_str);
+
 		return -1;
 	}
 
@@ -17,7 +25,7 @@ int main(int argc, char *argv[])
 
 	RevertString(reverted_str);
 
-	printf("Reverted: %s\n", reverted_str);
+	printf("\nReverted: %s\n\n", reverted_str);
 	free(reverted_str);
 	return 0;
 }

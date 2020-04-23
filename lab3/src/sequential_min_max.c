@@ -1,12 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "find_min_max.h"
 #include "utils.h"
 
 int main(int argc, char **argv) {
   if (argc != 3) {
-    printf("Usage: %s seed arraysize\n", argv[0]);
+    printf("\nUsage: %s seed arraysize\n\n", argv[0]);
+    
+    int array_size = strlen(argv[0]), seed = array_size;
+
+    int *array = malloc(array_size * sizeof(int));
+    GenerateArray(array, array_size, seed);
+    struct MinMax min_max = GetMinMax(array, 0, array_size);
+    free(array);
+    
+    printf("\nmin: %d\n", min_max.min);
+    printf("max: %d\n\n", min_max.max);
     return 1;
   }
 
@@ -27,8 +38,8 @@ int main(int argc, char **argv) {
   struct MinMax min_max = GetMinMax(array, 0, array_size);
   free(array);
 
-  printf("min: %d\n", min_max.min);
-  printf("max: %d\n", min_max.max);
+  printf("\nmin: %d\n", min_max.min);
+  printf("max: %d\n\n", min_max.max);
 
   return 0;
 }

@@ -1,7 +1,8 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-struct MinMax {
+struct MinMax 
+{
   int min;
   int max;
 };

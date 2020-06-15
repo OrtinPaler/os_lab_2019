@@ -1,11 +1,9 @@
+#include <errno.h>
 #include <getopt.h>
-#include <limits.h>
 #include <pthread.h>
 #include <stdbool.h>
 #include <stdlib.h>
-#include <stdint.h>
 #include <stdio.h>
-#include <sys/time.h>
 
 void fact_mod(void *);
 

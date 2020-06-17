@@ -16,7 +16,7 @@ struct FactorialArgs
   uint64_t end;
   uint64_t mod;
 };
-
+/*MultModulo(total, result, mod)*/
 uint64_t MultModulo(uint64_t a, uint64_t b, uint64_t mod)
 {
   uint64_t result = 0;
@@ -43,7 +43,9 @@ uint64_t Factorial(const struct FactorialArgs* args)
 	for (uint64_t i = start; i <= end; ++i)
   {
     ans *= i;
+    printf("ans_1 = %d\n", (int)ans);
     ans %= mod;
+    printf("ans_2 = %d\n", (int)ans);
 	}
   return ans;
 }
@@ -209,29 +211,15 @@ int main(int argc, char **argv)
       fprintf(stdout, "\nReceive: %llu %llu %llu\n\n", (unsigned long long)begin, (unsigned long long)end, (unsigned long long)mod);
 
       struct FactorialArgs args[tnum];
-      uint64_t range = (end - begin) / tnum;
+      uint64_t range = (end - begin + 1) / tnum;
       
       for (int i = 0; i < tnum; i++)
       {
-        if (i != 0)
-        {
-          args[i].begin = begin + i * range + 1;
-        }
-        else
-        {
-          args[i].begin = begin + i * range;
-        }
-                    
-        if (i == tnum - 1)
-        {
-          args[i].end = end;
-        }
-        else
-        {
-          args[i].end = begin + (i + 1) * range;
-        }
-
+        args[i].begin = begin + i * range;
+        args[i].end = args[i].begin + range - 1;         
         args[i].mod = mod;
+
+        printf("args[%i].begin = %d\nargs[%i].end = %d\nargs[%i].mod = %d\n", i, (int)args[i].begin, i, (int)args[i].end, i, (int)args[i].mod);
 
         if (pthread_create(&threads[i], NULL, ThreadFactorial, (void*)&args[i]))
         {

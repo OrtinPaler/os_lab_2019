@@ -1,4 +1,3 @@
-
 #include <getopt.h>
 #include <netinet/in.h> // определяет структуру sockaddr_in
 #include <netinet/ip.h>

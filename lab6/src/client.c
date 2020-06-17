@@ -66,7 +66,7 @@ int main(int argc, char **argv)
   // иметь значение от 0 (00000000) до 255 (11111111)
   char servers[255] = {'\0'};
 
-  while (1)
+  while (true)
   {
     int current_optind = optind ? optind : 1;
 
@@ -199,7 +199,6 @@ int main(int argc, char **argv)
 
   // нагрузка на каждый сервер 
   int range = k / servers_num;
-  printf("\nrange = %i\n\n", range);
   uint64_t answer = 1;
   for (int i = 0; i < servers_num; i++)
   {
@@ -258,11 +257,11 @@ int main(int argc, char **argv)
       printf("\nError converting string to uint64_t\n\n");
       exit(1);
     }
-
+    printf("temp = %llu\n", (unsigned long long)temp);
     answer *= temp;
     close(client_sock);
   }
-  printf("\nanswer: %llu\n", (unsigned long long)answer);
+  printf("\nanswer: %llu\n", (unsigned long long)answer % mod);
   free(to);
   return 0;
 }

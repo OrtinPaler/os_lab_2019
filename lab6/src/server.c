@@ -1,3 +1,4 @@
+
 #include <getopt.h>
 #include <netinet/in.h> // определяет структуру sockaddr_in
 #include <netinet/ip.h>
@@ -9,14 +10,13 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-
 struct FactorialArgs 
 {
   uint64_t begin;
   uint64_t end;
   uint64_t mod;
 };
-/*MultModulo(total, result, mod)*/
+
 uint64_t MultModulo(uint64_t a, uint64_t b, uint64_t mod)
 {
   uint64_t result = 0;
@@ -39,14 +39,12 @@ uint64_t Factorial(const struct FactorialArgs* args)
   uint64_t start = args->begin;
   uint64_t end = args->end;
   uint64_t mod = args->mod;
-    
-	for (uint64_t i = start; i <= end; ++i)
+  
+  for (uint64_t i = start; i <= end; ++i)
   {
     ans *= i;
-    printf("ans_1 = %d\n", (int)ans);
     ans %= mod;
-    printf("ans_2 = %d\n", (int)ans);
-	}
+  }
   return ans;
 }
 
@@ -219,8 +217,6 @@ int main(int argc, char **argv)
         args[i].end = args[i].begin + range - 1;         
         args[i].mod = mod;
 
-        printf("args[%i].begin = %d\nargs[%i].end = %d\nargs[%i].mod = %d\n", i, (int)args[i].begin, i, (int)args[i].end, i, (int)args[i].mod);
-
         if (pthread_create(&threads[i], NULL, ThreadFactorial, (void*)&args[i]))
         {
           printf("\nError: pthread_create failed\n\n");
@@ -228,10 +224,10 @@ int main(int argc, char **argv)
         }
       }
 
-      int total = 1;
+      uint64_t total = 1;
       for (int i = 0; i < tnum; i++)
       {
-        int result = 0;
+        uint64_t result = 0;
         pthread_join(threads[i], (void**)&result);
         total = MultModulo(total, result, mod);
       }
@@ -239,7 +235,7 @@ int main(int argc, char **argv)
       printf("\nTotal: %llu\n\n", (unsigned long long)total);
 
       char buffer[sizeof(total)];
-      memcpy(buffer, &total, sizeof(total));
+      sprintf(buffer, "%llu", (unsigned long long)total);
       
       if (send(client_fd, buffer, sizeof(total), 0) < 0)
       {
